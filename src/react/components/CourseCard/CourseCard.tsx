@@ -16,6 +16,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { getLabel, CoursePublicLabels, CourseLevelLabels, CourseFocusLabels } from '../../../utils/enums';
 import type { CourseCardProps, TimeSlot } from './types';
+import { useLocale } from '../../../i18n/LocalContext';
 
 export const CourseCard: React.FC<CourseCardProps> = ({ 
     course, 
@@ -97,6 +98,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             default: return 'w-16 h-16';
         }
     };
+    
+    const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
+    const { t } = useLocale();
 
     return (
         <article 
@@ -137,7 +141,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                         <div className='flex items-center space-x-1'>
                             <CalendarDaysIcon className='w-4 h-4 text-gray-500 group-hover:text-indigo-600'/>
                             <ul className='flex items-center space-x-1'>
-                                {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map((day) => (
+                                {DAYS.map((day) => (
                                     <li 
                                         key={day}
                                         className={`
@@ -146,7 +150,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                                             group-hover:text-indigo-600
                                         `}
                                     >
-                                        {day.charAt(0).toUpperCase() + day.slice(1)}
+                                        {t(`course.days.${day}`)}
                                     </li>
                                 ))}
                             </ul>
@@ -156,7 +160,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                             <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex justify-between items-center">
                                 <span className='flex items-center'>
                                     <ChartBarSquareIcon className='w-4 h-4 mr-1'/>
-                                    {getLabel(course.level, CourseLevelLabels)}
+                                    {getLabel(course.level, CourseLevelLabels, t)}
                                 </span>
                             </p>
                         )}
@@ -191,7 +195,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                                 {showPublic && (
                                     <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-center">
                                         <UsersIcon className='w-4 h-4 mr-1'/>
-                                        {getLabel(String(course.public), CoursePublicLabels)}
+                                        {getLabel(course.public, CoursePublicLabels, t)}
                                     </p>
                                 )}
                                 
@@ -199,21 +203,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                                     <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex justify-between items-center">
                                         <span className='flex items-center justify-end'>
                                             <ViewfinderCircleIcon className='w-4 h-4 mr-1'/>
-                                            {getLabel(course.focus, CourseFocusLabels)}
+                                            {getLabel('partnerwork', CourseFocusLabels, t)}
                                         </span>
                                     </p>
                                 )}
 
                                 <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-center">
-                                    <MapPinIcon
-                                        className={`w-6 h-6 transition-colors ${
-                                            currentCourse &&
-                                            course.address &&
-                                            course.address.split(',').some(address => address.trim().toLowerCase().includes(currentCourse.address.trim().toLowerCase()))
-                                                ? 'text-indigo-600'
-                                                : 'text-indigo-400'
-                                        }`}
-                                    />
+                                    <MapPinIcon className="w-4 h-4 flex-shrink-0"/>
                                     <span className='text-wrap break-words'>{course.address}</span>
                                 </p>
 
@@ -227,7 +223,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                                         onClick={handleLinkClick}
                                         className="inline-flex items-center px-2.5 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 rounded-md"
                                     >
-                                        <span>View Details</span>
+                                        <span>{t('course.viewDetails')}</span>
                                         <ArrowTopRightOnSquareIcon className="w-3 h-3 ml-1" />
                                     </button>
                                 </div>

@@ -1,23 +1,20 @@
 // src/react/components/CourseFilters/CourseFilters.tsx
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { SearchBox, RefinementList, ToggleRefinement, Stats, CurrentRefinements } from 'react-instantsearch';
 import type { CourseFiltersProps } from './types';
 import { AdjustmentsVerticalIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-
-
+import { useLocale } from '../../../i18n/LocalContext';
+import { getLabel, CourseLevelLabels, CourseFocusLabels, CoursePublicLabels } from '../../../utils/enums';
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-  import { Button } from "@/components/ui/button"
-
+import { Button } from "@/components/ui/button"
 
 import type { CurrentRefinementsProps } from "react-instantsearch";
 
@@ -25,23 +22,25 @@ import type { CurrentRefinementsProps } from "react-instantsearch";
 
 const transformItems: CurrentRefinementsProps["transformItems"] = (items) => {
 	return items.map((item) => {
-	  if (item.attribute === "genres") {
-		item.label = "Genre";
-	  }
-	  if (item.attribute === "activities") {
-		item.label = "Activities";
-	  }
-	  if (item.attribute === "city") {
-		item.label = "City";
-	  }
-	  if (item.attribute === "level") {
-		item.label = "Level";
-	  }
-	  if (item.attribute === "focus") {
-		item.label = "Focus";
-	  }
-	  if (item.attribute === "styles") {
-		item.label = "Styles";
+	  switch (item.attribute) {
+		case "genres":
+		  item.label = "Genre";
+		  break;
+		case "activities":
+		  item.label = "Activities";
+		  break;
+		case "city":
+		  item.label = "City";
+		  break;
+		case "level":
+		  item.label = "Level";
+		  break;
+		case "focus":
+		  item.label = "Focus";
+		  break;
+		case "styles":
+		  item.label = "Styles";
+		  break;
 	  }
 	  return item;
 	});
@@ -70,6 +69,46 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
         }
     } = config;
     const [isOpen, setIsOpen] = useState(false);
+    const { t } = useLocale();
+
+    // Memoize transform functions to prevent unnecessary re-renders
+    const transformLevelItems = useCallback((items: Array<{ label: string; value: string; count: number; isRefined: boolean }>) => {
+        return items.map(item => {
+            const translatedLabel = getLabel(item.value, CourseLevelLabels, t);
+            return {
+                ...item,
+                label: translatedLabel || item.label
+            };
+        });
+    }, [t]);
+
+    const transformFocusItems = useCallback((items: Array<{ label: string; value: string; count: number; isRefined: boolean }>) => {
+        return items.map(item => {
+            const translatedLabel = getLabel(item.value, CourseFocusLabels, t);
+            return {
+                ...item,
+                label: translatedLabel || item.label
+            };
+        });
+    }, [t]);
+
+    const transformPublicItems = useCallback((items: Array<{ label: string; value: string; count: number; isRefined: boolean }>) => {
+        return items.map(item => {
+            const translatedLabel = getLabel(item.value, CoursePublicLabels, t);
+            return {
+                ...item,
+                label: translatedLabel || item.label
+            };
+        });
+    }, [t]);
+
+    // Memoize common class names
+    const refinementListClassNames = useMemo(() => ({
+        root: 'space-y-2',
+        label: 'flex items-center space-x-2 text-sm text-gray-500',
+        checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
+        count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md'
+    }), []);
 
     return (
         <>
@@ -87,7 +126,7 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             reset: 'hidden',
                             loadingIndicator: 'hidden'
                         }}
-                        placeholder="Search courses..."
+                        placeholder={t('filters.searchPlaceholder')}
                     />
                 </div>
                 <Sheet>
@@ -103,9 +142,9 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                     </SheetTrigger>
                     <SheetContent>
                         <SheetHeader>
-                            <SheetTitle>Filters</SheetTitle>
+                            <SheetTitle>{t('filters.title')}</SheetTitle>
                             <SheetDescription>
-                            Please select the filters you want to apply to your search.
+                            {t('filters.description')}
                             </SheetDescription>
                             <Stats classNames={{ root: "text-xs text-gray-500",}}/>
                             <CurrentRefinements 
@@ -123,16 +162,11 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             {show.city && (
                                 <div className="filter-group">
                                     <h3 className="text-xs font-medium text-gray-900 mb-2 uppercase">
-                                        {labels.city}
+                                        {t('filters.city')}
                                     </h3>
                                     <RefinementList 
                                         attribute="city"
-                                        classNames={{
-                                            root: 'space-y-2',
-                                            label: 'flex items-center space-x-2 text-sm text-gray-600',
-                                            checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
-                                            count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md'
-                                        }}
+                                        classNames={refinementListClassNames}
                                         style={{accentColor: 'black'}}
                                     />
                                 </div>
@@ -141,16 +175,11 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             {show.activities && (
                                 <div className="filter-group">
                                     <h3 className="text-xs font-medium text-gray-900 mb-2 uppercase">
-                                        {labels.activities}
+                                        {t('filters.activities')}
                                     </h3>
                                     <RefinementList 
                                         attribute="activities"
-                                        classNames={{
-                                            root: 'space-y-2',
-                                            label: 'flex items-center space-x-2 text-sm text-gray-600',
-                                            checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
-                                            count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md'
-                                        }}
+                                        classNames={refinementListClassNames}
                                         style={{accentColor: 'black'}}
                                     />
                                 </div>
@@ -159,16 +188,11 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             {show.styles && (
                                 <div className="filter-group">
                                     <h3 className="text-xs font-medium text-gray-900 mb-2 uppercase">
-                                        {labels.styles}
+                                        {t('filters.styles')}
                                     </h3>
                                     <RefinementList 
                                         attribute="styles"
-                                        classNames={{
-                                            root: 'space-y-2',
-                                            label: 'flex items-center space-x-2 text-sm text-gray-600',
-                                            checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
-                                            count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md'
-                                        }}
+                                        classNames={refinementListClassNames}
                                         style={{accentColor: 'black'}}
                                     />
                                 </div>
@@ -177,16 +201,12 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             {show.levels && (
                                 <div className="filter-group">
                                     <h3 className="text-xs font-medium text-gray-700 mb-2 uppercase">
-                                        {labels.levels}
+                                        {t('filters.levels')}
                                     </h3>
                                     <RefinementList 
                                         attribute="level"
-                                        classNames={{
-                                            root: 'space-y-2',
-                                            label: 'flex items-center space-x-2 text-sm text-gray-600',
-                                            checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
-                                            count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md'
-                                        }}
+                                        transformItems={transformLevelItems}
+                                        classNames={refinementListClassNames}
                                         style={{accentColor: 'black'}}
                                     />
                                 </div>
@@ -194,16 +214,12 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             {show.focus && (
                                 <div className="filter-group">
                                     <h3 className="text-xs font-medium text-gray-700 mb-2 uppercase">
-                                        {labels.focus}
+                                        {t('filters.focus')}
                                     </h3>
                                     <RefinementList 
                                         attribute="focus"
-                                        classNames={{
-                                            root: 'space-y-2',
-                                            label: 'flex items-center space-x-2 text-sm text-gray-600',
-                                            checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
-                                            count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md'
-                                        }}
+                                        transformItems={transformFocusItems}
+                                        classNames={refinementListClassNames}
                                         style={{accentColor: 'black'}}
                                     />
                                 </div>
@@ -211,21 +227,36 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             {show.public && (
                                 <div className="filter-group">
                                     <h3 className="text-xs font-medium text-gray-700 mb-2 uppercase">
-                                        {labels.public}
+                                        {t('filters.public')}
+                                    </h3>
+                                    <RefinementList 
+                                        attribute="public"
+                                        transformItems={transformPublicItems}
+                                        classNames={refinementListClassNames}
+                                        style={{accentColor: 'black'}}
+                                    />
+                                </div>
+                            )}
+
+                            {show.dropIn && (
+                                <div className="filter-group">
+                                    <h3 className="text-xs font-medium text-gray-700 mb-2 uppercase">
+                                        {t('filters.drop_in')}
                                     </h3>
                                     <ToggleRefinement 
-                                        attribute="public"
-                                        label="Show public classes only"
+                                        attribute="drop_in"
+                                        label="Drop-in classes"
                                         classNames={{
                                             root: 'flex items-center space-x-2',
-                                            checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
-                                            label: 'text-sm text-gray-600'
+                                            checkbox: 'mr-1 h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
+                                            label: 'text-sm text-gray-500'
                                         }}
                                         style={{accentColor: 'black'}}
                                     />
                                 </div>
                             )}
-                            </div>
+                                
+                        </div>
                     </SheetContent>
                 </Sheet>
             </div>

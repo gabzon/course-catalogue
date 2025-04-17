@@ -1,4 +1,8 @@
 
+# v0.4 
+* Defaults values working
+* Hide/Show filters according to prefered
+
 # v0.3
 * Responsive version
 

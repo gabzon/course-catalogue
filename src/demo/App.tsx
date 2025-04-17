@@ -1,6 +1,8 @@
 // src/demo/App.tsx
 import { CourseCatalogue } from '../react/CourseCatalogue';
 import { CourseCatalogueCore } from '../core/services';
+import { LocaleProvider } from '../i18n/LocalContext';
+import { Locale } from '../i18n/translations';
 
 const typesenseConfig = {
   apiKey: import.meta.env.VITE_TYPESENSE_API_KEY,
@@ -17,20 +19,26 @@ const typesenseConfig = {
 const catalogueConfig = {
   location: {
     city: 'zagreb',
-    coordinates: { lat: 45.8150, lng: 15.9819 }
+    coordinates: { lat: 45.8150, lng: 15.9819 },
+    // coordinates: { lat: 45.49370599039489, lng: 15.55604178448852 },
+    radius: 15000,
+    zoom: 12
   },
   defaults: {
-    activities: ['dance'],
-    levels: ['beginner']
+    activities: [],
+    levels: ['b1']
   },
   filters: {
     show: {
-      city: true,
+      city: false,
       activities: true,
-      styles: true,
+      styles: false,
       levels: true,
-      focus: true,
-      public: true
+	  days: true,
+      focus: false,
+      public: true,
+	  dropIn: true,
+	  organization: false
     }
   },
   styles: {
@@ -47,13 +55,16 @@ const catalogueConfig = {
 
 const core = new CourseCatalogueCore(typesenseConfig, catalogueConfig);
 
-function App() {
+interface AppProps {
+	locale?: Locale;  // Using the Locale type from translations
+  }
+
+function App({ locale = 'en' }: AppProps) {
   return (
     <div className="h-screen">
-      <CourseCatalogue 
-        searchClient={core.getSearchClient()}
-        config={catalogueConfig}
-      />
+        <LocaleProvider initialLocale={locale}>
+        	<CourseCatalogue  searchClient={core.getSearchClient()} config={catalogueConfig} />      
+        </LocaleProvider>
     </div>
   );
 }

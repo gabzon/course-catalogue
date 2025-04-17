@@ -16,7 +16,17 @@ export const CourseCatalogue: React.FC<CourseCatalogueProps> = ({
   const defaultConfig: CatalogueConfig = {
     location: {
       coordinates: { lat: 45.8, lng: 15.97 }, // Zagreb default
-      radius: 10000 // Default radius in meters (10km)
+      radius: 15000, // Default radius in meters (15km)
+      zoom: 12 // Default zoom
+    },
+    defaults: {
+      activities: [],
+      styles: [],
+      levels: [],
+      focus: [],
+      public: [],
+      dropIn: false,
+      organization: []
     },
     filters: {
       show: {
@@ -44,12 +54,20 @@ export const CourseCatalogue: React.FC<CourseCatalogueProps> = ({
     }
   };
 
+  const buildInitialFilters = () => {
+    // Get the first activity from defaults if it exists
+    const firstActivity = finalConfig.defaults?.activities?.[0];
+    // If there's an activity, create a filter string, otherwise return empty string
+    return firstActivity ? `activities:${firstActivity}` : '';
+  };
+
   return (
     <InstantSearch searchClient={searchClient} indexName="courses">
       <Configure 
         hitsPerPage={finalConfig.search?.hitsPerPage || 250}
         aroundLatLng={`${finalConfig.location?.coordinates?.lat},${finalConfig.location?.coordinates?.lng}`}
-        aroundRadius={finalConfig.location?.radius || 10000}
+        aroundRadius={finalConfig.location?.radius || 15000}
+        filters={buildInitialFilters()}
       />
       <CoursesMap 
         config={finalConfig}

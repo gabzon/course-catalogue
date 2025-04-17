@@ -1,5 +1,4 @@
 // src/react/components/Map/types.ts
-import type { GeoHit } from '../../../core/types';
 import type { CourseCardProps } from '../CourseCard/types';
 import type { CourseFiltersProps } from '../CourseFilters/types';
 import type { CoursePopupProps } from '../CoursePopup/types';
@@ -53,6 +52,23 @@ export interface MapConfig {
         showSidebar?: boolean;
         sidebarWidth?: string;
         mapPosition?: 'left' | 'right';
+    };
+    filters?: {
+        show?: {
+            city?: boolean;
+            activities?: boolean;
+            styles?: boolean;
+            levels?: boolean;
+            days?: boolean;
+            focus?: boolean;
+            public?: boolean;
+            dropIn?: boolean;
+            organization?: boolean;
+        };
+    };
+    location?: {
+        coordinates?: Location;
+        zoom?: number;
     };
 }
 

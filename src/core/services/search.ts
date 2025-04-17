@@ -14,7 +14,7 @@ export class SearchService {
                 connectionTimeoutSeconds: config.connectionTimeoutSeconds || 2
             },
             additionalSearchParameters: {
-                query_by: 'name,address,activities,styles'
+                query_by: 'name,address,activities,styles,level'
             }
         });
 

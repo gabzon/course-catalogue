@@ -12,16 +12,15 @@ import {
     TagIcon,
     CalendarDaysIcon,
     ChevronUpIcon } from '@heroicons/react/24/outline';
-import { getLabel, CourseLevelLabels, CourseFocusLabels, CoursePublicLabels } from '../../../utils/enums';
+import { getLabel, CoursePublicLabels, CourseLevelLabels, CourseFocusLabels } from '../../../utils/enums';
 import type { CoursePopupItemProps } from './types';
+import { useLocale } from '../../../i18n/LocalContext';
 
 interface TimeSlot {
     day: string;
     start_time: string;
     end_time: string;
 }
-
-
 
 export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
     course,
@@ -39,6 +38,7 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
         showStyles = true
     } = config;
     const [showDetails, setShowDetails] = useState(false);
+    const { t } = useLocale();
 
     const timetableData = React.useMemo(() => {
         try {
@@ -112,7 +112,8 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
                                     group-hover:text-indigo-600
                                 `}
                             >
-                                {day.charAt(0).toUpperCase() + day.slice(1)}
+                                {/* {day.charAt(0).toUpperCase() + day.slice(1)} */}
+                                {t(`course.days.${day}`)}
                             </li>
                             ))}
                         </ul>
@@ -121,7 +122,7 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
                         {showLevel && (
                             <span className="flex items-center">
                                 <ChartBarSquareIcon className="w-3 h-3 mr-1 flex-shrink-0" />
-                                {getLabel(course.level, CourseLevelLabels)}
+                                {getLabel(course.level, CourseLevelLabels, t)}
                             </span>
                         )}
                     </p>
@@ -157,14 +158,14 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
 
                             <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-center">
                                 <UsersIcon className='w-4 h-4 mr-1'/>
-                                {getLabel(String(course.public), CoursePublicLabels)}
+                                {getLabel(course.public, CoursePublicLabels,t)}
                             </p>
 
                             {showFocus && (
                                 <p className='flex items-center text-gray-500'>
                                     <span className="flex items-center">
                                         <ViewfinderCircleIcon className="w-3 h-3 mr-1" />
-                                        {getLabel(course.focus, CourseFocusLabels)}
+                                        {getLabel(course.focus, CourseFocusLabels,t)}
                                     </span>
                                 </p>
                             )}

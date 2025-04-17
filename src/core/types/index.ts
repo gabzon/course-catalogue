@@ -41,6 +41,7 @@ export interface CatalogueConfig {
           lng: number;
       };
       radius?: number;
+      zoom?: number;
   };
 
   // Filter Defaults
@@ -49,7 +50,9 @@ export interface CatalogueConfig {
       styles?: string[];
       levels?: string[];
       focus?: string[];
-      public?: boolean;
+      public?: string[];
+      dropIn?: boolean;
+      organization?: string[];
   };
 
   // Filter Visibility
@@ -91,24 +94,59 @@ export interface CatalogueConfig {
   };
 }
 
-// Course data interface
-export interface GeoHit {
-  objectID: string;
-  name: string;
-  cover_image?: string;
-  level_number: number;
-  level_code: string;
-  level: string;
-  focus: string;
-  status_label: string;
-  address: string;
-  schedule: string[];
-  activity_names: string[];
-  public: boolean;
-  place?: string;
-  organization_name?: string;
-  full_slug?: string;
-  styles?: string[];
-  _geoloc: { lat: number; lng: number; };
-  timetable?: string; // Added for schedule parsing
+export interface TimeSlot {
+    day: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
+    start_time: string;
+    end_time: string;
 }
+
+
+export type GeoHit = {
+    objectID: string;
+    id: string;
+    city: string;
+    country: string;
+    name: string;
+    level_label: string;
+    level: string;
+    type: string;
+    focus: string;
+    status: string;
+    address: string;
+    full_address: string;
+    schedule: string[];
+    genres: string[];
+    activities: string[];
+    public: string;
+    place?: string;
+    organization_id?: string;
+    organization_name?: string;
+    organization_has_corazon?: boolean;
+    full_slug?: string;
+    average_overall_rating?: number;
+    manage_registrations?: boolean;
+    instructors?: string[];
+    neighborhood?: string;
+    location_id?: string;
+    location_name?: string;
+    cover_image?: string;
+    created_at?: string;
+    styles?: string[];
+    days?: string[];
+    excerpt?: string;
+    description?: string;
+    drop_in?: boolean;
+    video?: string;
+    slug?: string;
+    srcset?: string;
+    tagline?: string;
+    updated_at: number;
+    start_date: string;
+    end_date: string;
+    timetable: string | TimeSlot[];
+    _geoloc: {
+      lat: number;
+      lng: number;
+    };
+    __position: number;
+};

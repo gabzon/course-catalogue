@@ -41,7 +41,7 @@ export type Course = {
     schedule: string[];
     genres: string[];
     activities: string[];
-    public: boolean;
+    public: string;
     place?: string;
     organization_id?: string;
     organization_name?: string;

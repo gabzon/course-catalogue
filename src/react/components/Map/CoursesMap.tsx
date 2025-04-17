@@ -17,13 +17,12 @@ const DEFAULT_MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 export const CoursesMap: React.FC<MapProps> = ({
     config = {},
     courseCardConfig = {},
-    filterConfig = {},
     popupConfig = {}
 }) => {
     const {
         initialView = {
-            center: DEFAULT_MAP_CENTER,
-            zoom: 12
+            center: config.location?.coordinates || DEFAULT_MAP_CENTER,
+            zoom: config.location?.zoom || 12
         },
         style = {
             mapStyle: DEFAULT_MAP_STYLE,
@@ -42,15 +41,28 @@ export const CoursesMap: React.FC<MapProps> = ({
             showSidebar: true,
             sidebarWidth: '25%',
             mapPosition: 'right'
+        },
+        filters = {
+            show: {
+                city: true,
+                activities: true,
+                styles: true,
+                levels: true,
+                days: true,
+                focus: true,
+                public: true,
+                dropIn: true,
+                organization: true
+            }
         }
     } = config;
 
     const { items } = useGeoSearch<GeoHit>();
     const [currentCourse, setCurrentCourse] = useState<GeoHit | null>(null);
     const [viewState, setViewState] = useState<MapViewState>({
-        latitude: initialView.center.lat,
-        longitude: initialView.center.lng,
-        zoom: initialView.zoom
+        latitude: initialView.center?.lat || DEFAULT_MAP_CENTER.lat,
+        longitude: initialView.center?.lng || DEFAULT_MAP_CENTER.lng,
+        zoom: initialView.zoom || 12
     });
     const [clusters, setClusters] = useState<any[]>([]);
     const [supercluster, setSupercluster] = useState<Supercluster<ClusterProperties> | null>(null);
@@ -193,7 +205,7 @@ export const CoursesMap: React.FC<MapProps> = ({
             <div className="md:hidden flex flex-col h-full">
                 <div className="h-1/2 overflow-y-auto border-b border-gray-300">
                     <header className="p-2 bg-white border-b border-gray-200 sticky top-0 z-10">
-                        <CourseFilters config={filterConfig} />
+                        <CourseFilters config={filters} />
                     </header>
                     <div className="overflow-y-auto">
                         {items.map((course) => (
@@ -248,7 +260,7 @@ export const CoursesMap: React.FC<MapProps> = ({
                         style={{ width: layout.sidebarWidth }}
                     >
                         <header className="p-2 bg-white border-b border-gray-200 sticky top-0 z-10 flex-shrink-0">
-                            <CourseFilters config={filterConfig} />
+                            <CourseFilters config={filters} />
                         </header>
                         <div className="flex-1 overflow-y-auto">
                             {items.map((course) => (

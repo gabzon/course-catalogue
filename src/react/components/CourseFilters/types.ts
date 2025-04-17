@@ -7,6 +7,9 @@ export interface CourseFiltersConfig {
         levels?: boolean;
         focus?: boolean;
         public?: boolean;
+        dropIn?: boolean;
+        days?: boolean;
+        organization?: boolean;
     };
     defaults?: {
         city?: string[];
