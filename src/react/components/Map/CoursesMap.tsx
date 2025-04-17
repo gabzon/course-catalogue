@@ -176,8 +176,8 @@ export const CoursesMap: React.FC<MapProps> = ({
                             currentCourse &&
                             currentCourse._geoloc.lat === latitude &&
                             currentCourse._geoloc.lng === longitude
-                                ? `text-[${style.selectedMarkerColor}]`
-                                : `text-[${style.markerColor}]`
+                                ? 'text-indigo-600'
+                                : 'text-black'
                         }`}
                     />
                 </Marker>
