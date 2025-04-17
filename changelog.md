@@ -1,4 +1,10 @@
 
+# v0.3
+* Responsive version
+
+# v0.2
+* when user clicks marker, marker change color
+* When user clicks course in list marker is colored 
 
 # v0.1
 * Map Created

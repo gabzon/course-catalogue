@@ -91,14 +91,15 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                     />
                 </div>
                 <Sheet>
-                    <SheetTrigger>
-                        <button 
-                            type="button" 
+                    <SheetTrigger asChild>
+                        <Button 
+                            variant="outline"
+                            size="sm"
                             onClick={() => setIsOpen(!isOpen)} 
-                            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-lg text-sm px-5 py-2.5"
+                            className="text-gray-900 bg-white hover:bg-gray-100 h-10"
                         >
                             <AdjustmentsVerticalIcon aria-hidden="true" className="h-5 w-5" />
-                        </button>
+                        </Button>
                     </SheetTrigger>
                     <SheetContent>
                         <SheetHeader>

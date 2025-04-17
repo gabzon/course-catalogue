@@ -189,7 +189,59 @@ export const CoursesMap: React.FC<MapProps> = ({
 
     return (
         <div className="w-full h-screen flex flex-col">
-            <div className={`flex ${layout.mapPosition === 'right' ? 'flex-row' : 'flex-row-reverse'} h-full`}>
+            {/* Mobile Layout (below md breakpoint) */}
+            <div className="md:hidden flex flex-col h-full">
+                <div className="h-1/2 overflow-y-auto border-b border-gray-300">
+                    <header className="p-2 bg-white border-b border-gray-200 sticky top-0 z-10">
+                        <CourseFilters config={filterConfig} />
+                    </header>
+                    <div className="overflow-y-auto">
+                        {items.map((course) => (
+                            <CourseCard
+                                key={course.objectID}
+                                course={course}
+                                onClick={handleCourseSelect}
+                                currentCourse={currentCourse}
+                                config={courseCardConfig}
+                            />
+                        ))}
+                    </div>
+                </div>
+                <div className="h-1/2 relative">
+                    <Map
+                        {...viewState}
+                        onMove={evt => setViewState(evt.viewState)}
+                        mapStyle={style.mapStyle}
+                        ref={mapRef}
+                    >
+                        {controls.showZoom && <NavigationControl showCompass={controls.showCompass} />}
+                        {clusters.map(renderCluster)}
+                        {selectedCluster && (
+                            <Popup
+                                longitude={selectedCluster.geometry.coordinates[0]}
+                                latitude={selectedCluster.geometry.coordinates[1]}
+                                closeButton={true}
+                                closeOnClick={false}
+                                onClose={() => setSelectedCluster(null)}
+                                anchor="bottom"
+                                className="corazon-popup"
+                            >
+                                <CoursePopup
+                                    courses={items.filter(item => 
+                                        selectedCluster.properties.courseIds.includes(item.objectID)
+                                    )}
+                                    onCourseSelect={handleCourseSelect}
+                                    selectedCourse={currentCourse}
+                                    config={popupConfig}
+                                />
+                            </Popup>
+                        )}
+                    </Map>
+                </div>
+            </div>
+
+            {/* Desktop Layout (md and up) */}
+            <div className={`hidden md:flex ${layout.mapPosition === 'right' ? 'flex-row' : 'flex-row-reverse'} h-full`}>
                 {layout.showSidebar && (
                     <aside 
                         className="flex flex-col h-full border-r border-gray-300 overflow-y-auto"
@@ -220,9 +272,7 @@ export const CoursesMap: React.FC<MapProps> = ({
                         ref={mapRef}
                     >
                         {controls.showZoom && <NavigationControl showCompass={controls.showCompass} />}
-                        
                         {clusters.map(renderCluster)}
-
                         {selectedCluster && (
                             <Popup
                                 longitude={selectedCluster.geometry.coordinates[0]}
