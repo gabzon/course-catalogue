@@ -12,6 +12,7 @@ export type TranslationsType = {
             title: string;
             description: string;
             searchPlaceholder: string;
+            clearAll: string;
             city: string;
             activities: string;
             styles: string;
@@ -55,6 +56,7 @@ export const translations: TranslationsType = {
             title: 'Filters',
             description: 'Please select the filters you want to apply to your search.',
             searchPlaceholder: 'Search courses...',
+            clearAll: 'Clear all',
             city: 'City',
             activities: 'Activities',
             styles: 'Styles',
@@ -122,6 +124,7 @@ export const translations: TranslationsType = {
             title: 'Filtros',
             description: 'Selecciona los filtros que deseas aplicar a tu búsqueda.',
             searchPlaceholder: 'Buscar cursos...',
+            clearAll: 'Borrar todo',
             city: 'Ciudad',
             activities: 'Actividades',
             styles: 'Estilos',
@@ -189,6 +192,7 @@ export const translations: TranslationsType = {
             title: 'Filtres',
             description: 'Sélectionnez les filtres que vous souhaitez appliquer à votre recherche.',
             searchPlaceholder: 'Rechercher des cours...',
+            clearAll: 'Tout effacer',
             city: 'Ville',
             activities: 'Activités',
             styles: 'Styles',
@@ -256,6 +260,7 @@ export const translations: TranslationsType = {
             title: 'Filtri',
             description: 'Izaberite filtre koje želite primijeniti na svoj pretragu.',
             searchPlaceholder: 'Pretraži kurseve...',
+            clearAll: 'Obriši sve',
             city: 'Grad',
             activities: 'Aktivnosti',
             styles: 'Stilovi',

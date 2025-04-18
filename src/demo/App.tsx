@@ -30,15 +30,15 @@ const catalogueConfig = {
   },
   filters: {
     show: {
-      city: false,
+      city: true,
       activities: true,
-      styles: false,
+      styles: true,
       levels: true,
-	  days: true,
-      focus: false,
+	    days: true,
+      focus: true,
       public: true,
-	  dropIn: true,
-	  organization: false
+	    dropIn: true,
+	    organization: true
     }
   },
   styles: {

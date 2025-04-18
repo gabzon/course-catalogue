@@ -1,4 +1,7 @@
 
+# v0.5
+* Clear refinements button under filter added 
+
 # v0.4 
 * Defaults values working
 * Hide/Show filters according to prefered
