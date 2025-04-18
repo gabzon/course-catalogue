@@ -264,7 +264,7 @@ export const translations: TranslationsType = {
             city: 'Grad',
             activities: 'Aktivnosti',
             styles: 'Stilovi',
-            levels: 'Nivoi',
+            levels: 'Razina',
             focus: 'Fokus',
             public: 'Publika',
             others: 'Ostali',

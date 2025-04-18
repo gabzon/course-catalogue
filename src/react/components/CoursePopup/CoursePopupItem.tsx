@@ -41,8 +41,13 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
     const { t } = useLocale();
 
     const timetableData = React.useMemo(() => {
+        if (!course.timetable) return [];
+        
         try {
-            return JSON.parse(course.timetable) as TimeSlot[];
+            // Check if timetable is already an array or needs to be parsed
+            return typeof course.timetable === 'string' 
+                ? JSON.parse(course.timetable) as TimeSlot[]
+                : course.timetable as TimeSlot[];
         } catch (e) {
             console.warn('Failed to parse timetable:', e);
             return [];

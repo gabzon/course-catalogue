@@ -37,8 +37,13 @@ const transformItems: CurrentRefinementsProps["transformItems"] = (items) => {
 	});
 };
 
-export const CourseFilters: React.FC<CourseFiltersProps> = ({ 
-    config = {} 
+// Remove the unused 'defaults' from the destructuring assignment
+export const CourseFilters: React.FC<CourseFiltersProps> = ({
+    // refinementList,
+    // Remove or comment out the defaults line
+    // defaults = {},
+    // onChange,
+    config = {}
 }) => {
     const {
         show = {
@@ -49,15 +54,6 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
             focus: true,
             public: true
         },
-        defaults = {},
-        labels = {
-            city: 'City',
-            activities: 'Activities',
-            styles: 'Styles',
-            levels: 'Levels',
-            focus: 'Focus',
-            public: 'Public Classes'
-        }
     } = config;
     const [isOpen, setIsOpen] = useState(false);
     const { t } = useLocale();

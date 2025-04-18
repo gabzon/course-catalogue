@@ -55,7 +55,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     useEffect(() => {
         if (course.timetable) {
             try {
-                const parsedSchedule = JSON.parse(course.timetable);
+                // Check if timetable is already an array or needs to be parsed
+                const parsedSchedule = typeof course.timetable === 'string' 
+                    ? JSON.parse(course.timetable) 
+                    : course.timetable;
                 setSchedule(parsedSchedule);
             } catch (error) {
                 console.error('Error parsing timetable:', error);
