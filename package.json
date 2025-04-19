@@ -1,6 +1,6 @@
 {
 	"name": "@gabzon/course-catalogue",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "React Typescript component for Corazon using Typesense",
 	"type": "module",
 	"main": "dist/index.cjs.js",
@@ -14,7 +14,17 @@
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.es.js",
 			"require": "./dist/index.cjs.js"
-		}
+		},
+		"./i18n/LocalContext": {
+			"types": "./dist/i18n/LocalContext.d.ts",
+			"import": "./dist/i18n/LocalContext.js",
+			"require": "./dist/i18n/LocalContext.js"
+		  },
+		"./i18n/translations": {
+			"types": "./dist/i18n/translations.d.ts",
+			"import": "./dist/i18n/translations.js",
+			"require": "./dist/i18n/translations.js"
+		  }
 	},
 	"scripts": {
 		"dev": "vite",
