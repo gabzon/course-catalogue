@@ -34,14 +34,14 @@ export const CustomPanel: React.FC<CustomPanelProps> = ({
             {/* Backdrop */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-[100] transition-opacity duration-200" // Increased z-index from z-40 to z-[100]
+                    className="fixed inset-0 bg-black/50 z-30 transition-opacity duration-200"
                     onClick={onClose}
                 />
             )}
             
             {/* Panel */}
             <div
-                className={`fixed right-0 top-0 h-full w-full max-w-full sm:max-w-[400px] bg-white z-[101]" transform transition-transform duration-200 ease-in-out ${
+                className={`fixed right-0 top-0 h-full w-full max-w-full sm:max-w-lg bg-white z-40 transform transition-transform duration-200 ease-in-out ${
                     isOpen ? 'translate-x-0' : 'translate-x-full'
                 }`}
             >
