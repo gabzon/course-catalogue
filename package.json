@@ -1,6 +1,6 @@
 {
 	"name": "@gabzon/course-catalogue",
-	"version": "0.0.1",
+	"version": "1.0.1",
 	"description": "React Typescript component for Corazon using Typesense",
 	"type": "module",
 	"main": "dist/index.cjs.js",
