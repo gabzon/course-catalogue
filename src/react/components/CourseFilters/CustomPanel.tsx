@@ -34,7 +34,7 @@ export const CustomPanel: React.FC<CustomPanelProps> = ({
             {/* Backdrop */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-30 transition-opacity duration-200"
+                    className="fixed inset-0 bg-black opacity-50 z-30 transition-opacity duration-200"
                     onClick={onClose}
                 />
             )}

@@ -31,7 +31,7 @@ const catalogueConfig = {
 	},
 	filters: {
 		show: {
-		city: true,
+		city: false,
 		activities: true,
 		styles: true,
 		levels: true,

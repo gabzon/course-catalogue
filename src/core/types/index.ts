@@ -62,8 +62,11 @@ export interface CatalogueConfig {
           activities?: boolean;
           styles?: boolean;
           levels?: boolean;
+          days?: boolean;
           focus?: boolean;
           public?: boolean;
+          dropIn?: boolean;
+          organization?: boolean;
       };
   };
 
