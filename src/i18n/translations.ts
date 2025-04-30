@@ -27,6 +27,7 @@ export type TranslationsType = {
             address: string;
             organization: string;
             schedule: string;
+            level: string;
             days: {
                 mon: string;
                 tue: string;

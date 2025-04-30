@@ -29,47 +29,9 @@ const isWebComponent = process.env.FORMAT === 'webcomponent';
 
 export default defineConfig({
   ...baseConfig,
-  // Set the base path for shared hosting (can be '/' or a subdirectory)
-  base: isSharedHosting ? './' : '/',
-  build: isSharedHosting ? {
+  base: '/',  // This ensures proper asset loading
+  build: {
     outDir: 'dist',
-    // Copy the config.js file to the build output
     assetsInlineLimit: 0,
-  } : {
-    // Your existing build config for library mode
-    lib: {
-      entry: fileURLToPath(new URL(
-        isWebComponent ? 'src/esm-entry.ts' : 'src/index.ts', 
-        import.meta.url
-      )),
-      name: 'CorazonCourseCatalogue',
-      fileName: (format) => {
-        if (isWebComponent && format === 'es') {
-          return 'course-catalogue.webcomponent.js';
-        }
-        return `course-catalogue.${format}.js`;
-      },
-      formats: isWebComponent ? ['es'] : ['es', 'cjs'],
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
-      output: {
-        exports: 'named',
-        preserveModules: false,
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          'react/jsx-runtime': 'jsxRuntime'
-        },
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.names && assetInfo.names[0] && assetInfo.names[0].endsWith('.css')) {
-            return 'styles/[name][extname]';
-          }
-          return 'assets/[name][extname]';
-        }
-      }
-    },
-    sourcemap: true,
-    emptyOutDir: !isWebComponent
   }
 })
