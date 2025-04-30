@@ -154,3 +154,92 @@
   outline: none;
   box-shadow: none;
 }
+
+
+.corazon-refinement-searchbox .ais-SearchBox-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.corazon-refinement-searchbox .ais-SearchBox-input {
+  @apply w-full px-10 py-1 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm;
+}
+
+.corazon-refinement-searchbox .ais-SearchBox-submit {
+  position: absolute;
+  left: 0.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.corazon-refinement-searchbox .ais-SearchBox-submitIcon {
+  width: 1rem !important;
+  height: 1rem !important;
+  color: #6b7280 !important;
+}
+
+.corazon-refinement-searchbox .ais-SearchBox-reset,
+.corazon-refinement-searchbox .ais-SearchBox-loadingIndicator {
+  display: none;
+}
+
+.corazon-refinement-searchbox .ais-SearchBox-reset {
+  display: flex !important;
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.corazon-refinement-searchbox .ais-SearchBox-resetIcon {
+  width: 0.9rem !important;
+  height: 0.9rem !important;
+  color: #6b7280 !important;
+}
+
+.ais-RefinementList-noResults {
+  @apply text-sm text-gray-600;
+}
+
+/* Hide the default clear button in Chrome, Safari, Edge */
+.corazon-refinement-searchbox .ais-SearchBox-input::-webkit-search-clear-button,
+.corazon-refinement-searchbox .ais-SearchBox-input::-webkit-search-cancel-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Hide the default clear button in Firefox */
+.corazon-refinement-searchbox .ais-SearchBox-input[type="search"]::-ms-clear {
+  display: none;
+}
+
+/* Hide the default clear button in IE/Edge */
+.corazon-refinement-searchbox .ais-SearchBox-input[type="search"]::-ms-reveal {
+  display: none;
+}
+
+.ais-RefinementList-showMore--disabled {
+  display: none !important;
+}

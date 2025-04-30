@@ -94,7 +94,9 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
         root: 'space-y-2',
         label: 'flex items-center space-x-2 text-sm text-gray-500',
         checkbox: 'h-4 w-4 text-gray-900 rounded border-gray-300 focus:ring-gray-500 checked:bg-gray-900 checked:border-gray-900',
-        count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md'
+        count: 'ml-auto text-xs text-gray-500 bg-gray-100 border border-gray-200 px-1 py-0.5 m-0.5 rounded-md',
+        searchBox: "corazon-refinement-searchbox mb-2",
+        showMore: "rounded bg-gray-50 px-2 py-1 text-xs font-semibold text-gray-500 hover:bg-indigo-50 hover:text-indigo-600",
     }), []);
 
     return (
@@ -158,6 +160,8 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                                     attribute="city"
                                     classNames={refinementListClassNames}
                                     style={{accentColor: 'black'}}
+                                    searchable={true}
+                                    showMore={true}
                                 />
                             </div>
                         )}
@@ -171,6 +175,8 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                                     attribute="activities"
                                     classNames={refinementListClassNames}
                                     style={{accentColor: 'black'}}
+                                    searchable={true}
+                                    showMore={true}
                                 />
                             </div>
                         )}
@@ -184,6 +190,8 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                                     attribute="styles"
                                     classNames={refinementListClassNames}
                                     style={{accentColor: 'black'}}
+                                    searchable={true}
+                                    showMore={true}
                                 />
                             </div>
                         )}
@@ -198,6 +206,8 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                                     transformItems={transformLevelItems}
                                     classNames={refinementListClassNames}
                                     style={{accentColor: 'black'}}
+                                    searchable={true}
+                                    showMore={true}
                                 />
                             </div>
                         )}
@@ -211,6 +221,8 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                                     transformItems={transformFocusItems}
                                     classNames={refinementListClassNames}
                                     style={{accentColor: 'black'}}
+                                    searchable={true}
+                                    showMore={true}
                                 />
                             </div>
                         )}
@@ -224,6 +236,8 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                                     transformItems={transformPublicItems}
                                     classNames={refinementListClassNames}
                                     style={{accentColor: 'black'}}
+                                    searchable={true}
+                                    showMore={true}
                                 />
                             </div>
                         )}
@@ -246,6 +260,7 @@ export const CourseFilters: React.FC<CourseFiltersProps> = ({
                             </div>
                         )}
                     </div>
+                    <br />
                 </div>
             </CustomPanel>
         </>

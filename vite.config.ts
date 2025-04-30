@@ -1,9 +1,11 @@
-// vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'url';
 import tailwindcss from '@tailwindcss/vite'
 import dts from 'vite-plugin-dts'
+
+// Check if we're building for shared hosting
+const isSharedHosting = process.env.BUILD_TARGET === 'shared';
 
 // Create a base configuration
 const baseConfig = {
@@ -12,7 +14,7 @@ const baseConfig = {
     tailwindcss(),
     dts({
       include: ['src/**/*.ts', 'src/**/*.tsx'],
-      exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
+      exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'src/demo/**/*'],
     })
   ],
   resolve: {
@@ -27,7 +29,14 @@ const isWebComponent = process.env.FORMAT === 'webcomponent';
 
 export default defineConfig({
   ...baseConfig,
-  build: {
+  // Set the base path for shared hosting (can be '/' or a subdirectory)
+  base: isSharedHosting ? './' : '/',
+  build: isSharedHosting ? {
+    outDir: 'dist',
+    // Copy the config.js file to the build output
+    assetsInlineLimit: 0,
+  } : {
+    // Your existing build config for library mode
     lib: {
       entry: fileURLToPath(new URL(
         isWebComponent ? 'src/esm-entry.ts' : 'src/index.ts', 
@@ -45,12 +54,6 @@ export default defineConfig({
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
-        // For ESM builds, use import maps to resolve external dependencies
-        paths: isWebComponent ? {
-          'react': 'https://esm.sh/react@19.1.0',
-          'react-dom': 'https://esm.sh/react-dom@19.1.0',
-          'react/jsx-runtime': 'https://esm.sh/react@19.1.0/jsx-runtime'
-        } : undefined,
         exports: 'named',
         preserveModules: false,
         globals: {
@@ -67,6 +70,6 @@ export default defineConfig({
       }
     },
     sourcemap: true,
-    emptyOutDir: !isWebComponent // Only empty the output directory for the first build
+    emptyOutDir: !isWebComponent
   }
 })

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useGeoSearch } from "react-instantsearch";
 import Map, { Marker, NavigationControl, Popup } from "react-map-gl/maplibre";
-import { MapPinIcon } from "@heroicons/react/24/solid";
+import { MapPinIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Supercluster from "supercluster";
 import type { GeoHit } from "../../../core/types";
 import { CourseCard } from "../CourseCard";
@@ -68,6 +68,7 @@ export const CoursesMap: React.FC<MapProps> = ({
     const [supercluster, setSupercluster] = useState<Supercluster<ClusterProperties> | null>(null);
     const [selectedCluster, setSelectedCluster] = useState<any | null>(null);
     const mapRef = useRef<any>(null);
+    const [showMobileList, setShowMobileList] = useState(false);
 
     // Initialize supercluster
     useEffect(() => {
@@ -203,23 +204,40 @@ export const CoursesMap: React.FC<MapProps> = ({
         <div className="w-full h-screen flex flex-col">
             {/* Mobile Layout (below md breakpoint) */}
             <div className="md:hidden flex flex-col h-full">
-                <div className="h-1/2 overflow-y-auto border-b border-gray-300">
-                    <header className="p-2 bg-white border-b border-gray-200 sticky top-0 z-10">
+                <header className="p-2 bg-white border-b border-gray-200 sticky top-0 z-10">
+                    <div className="flex items-center justify-between mb-2">
                         <CourseFilters config={filters} />
-                    </header>
-                    <div className="overflow-y-auto">
-                        {items.map((course) => (
-                            <CourseCard
-                                key={course.objectID}
-                                course={course}
-                                onClick={handleCourseSelect}
-                                currentCourse={currentCourse}
-                                config={courseCardConfig}
-                            />
-                        ))}
+                        <button
+                            onClick={() => setShowMobileList(!showMobileList)}
+                            className="ml-2 p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
+                            aria-label={showMobileList ? 'Close list' : 'Open list'}
+                        >
+                            {showMobileList ? (
+                                <XMarkIcon className="w-6 h-6" />
+                            ) : (
+                                <Bars3Icon className="w-6 h-6" />
+                            )}
+                        </button>
                     </div>
-                </div>
-                <div className="h-1/2 relative">
+                </header>
+                
+                {showMobileList && (
+                    <div className="h-1/2 overflow-y-auto border-b border-gray-300">
+                        <div className="overflow-y-auto">
+                            {items.map((course) => (
+                                <CourseCard
+                                    key={course.objectID}
+                                    course={course}
+                                    onClick={handleCourseSelect}
+                                    currentCourse={currentCourse}
+                                    config={courseCardConfig}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                
+                <div className={`relative ${showMobileList ? 'h-1/2' : 'h-full'}`}>
                     <Map
                         {...viewState}
                         onMove={evt => setViewState(evt.viewState)}
@@ -256,8 +274,7 @@ export const CoursesMap: React.FC<MapProps> = ({
             <div className={`hidden md:flex ${layout.mapPosition === 'right' ? 'flex-row' : 'flex-row-reverse'} h-full`}>
                 {layout.showSidebar && (
                     <aside 
-                        className="flex flex-col h-full border-r border-gray-300 overflow-y-auto"
-                        style={{ width: layout.sidebarWidth }}
+                        className="flex flex-col h-full border-r border-gray-300 overflow-y-auto md:w-2/5 lg:w-1/3 xl:w-1/4"
                     >
                         <header className="p-2 bg-white border-b border-gray-200 sticky top-0 z-10 flex-shrink-0">
                             <CourseFilters config={filters} />

@@ -71,6 +71,7 @@ export const translations: TranslationsType = {
             address: 'Address',
             organization: 'Organization',
             schedule: 'Schedule',
+            level: 'Level',
             days: {
                 mon: 'mon',
                 tue: 'tue',
@@ -139,6 +140,7 @@ export const translations: TranslationsType = {
             address: 'Dirección',
             organization: 'Organización',
             schedule: 'Horario',
+            level: 'Nivel',
             days: {
                 mon: 'Lun',
                 tue: 'Mar',
@@ -207,6 +209,7 @@ export const translations: TranslationsType = {
             address: 'Adresse',
             organization: 'Organisation',
             schedule: 'Horaire',
+            level: 'Niveau',
             days: {
                 mon: 'Lun',
                 tue: 'Mar',
@@ -275,6 +278,7 @@ export const translations: TranslationsType = {
             address: 'Adresa',
             organization: 'Organizacija',
             schedule: 'Raspored',
+            level: 'Razina',
             days: {
                 mon: 'Pon',
                 tue: 'Uto',

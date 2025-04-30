@@ -5,16 +5,29 @@ import App from './App';
 import { CourseCatalogueCore } from '../core/services';
 import '../styles/globals.css';
 
+// Check for config.js first (for shared hosting)
+declare global {
+  interface Window {
+    TYPESENSE_CONFIG?: {
+      apiKey: string;
+      host: string;
+      port: number;
+      protocol: string;
+    };
+  }
+}
+
+// Use external config (for shared hosting) or environment variables
 const typesenseConfig = {
-	apiKey: import.meta.env.VITE_TYPESENSE_API_KEY,
-	nodes: [
-		{
-		host: import.meta.env.VITE_TYPESENSE_HOST,
-		port: parseInt(import.meta.env.VITE_TYPESENSE_PORT || '443'),
-		protocol: import.meta.env.VITE_TYPESENSE_PROTOCOL || 'https'
-		}
-	],
-	connectionTimeoutSeconds: 2
+  apiKey: window.TYPESENSE_CONFIG?.apiKey || import.meta.env.VITE_TYPESENSE_API_KEY,
+  nodes: [
+    {
+      host: window.TYPESENSE_CONFIG?.host || import.meta.env.VITE_TYPESENSE_HOST,
+      port: window.TYPESENSE_CONFIG?.port || parseInt(import.meta.env.VITE_TYPESENSE_PORT || '443'),
+      protocol: window.TYPESENSE_CONFIG?.protocol || import.meta.env.VITE_TYPESENSE_PROTOCOL || 'https'
+    }
+  ],
+  connectionTimeoutSeconds: 2
 };
 
 
@@ -54,11 +67,28 @@ const catalogueConfig = {
 	}
 };
 
-const core = new CourseCatalogueCore(typesenseConfig, catalogueConfig);
-const searchClient = core.getSearchClient();
+// Only initialize if we have the required credentials
+if (typesenseConfig.apiKey && typesenseConfig.nodes[0].host) {
+  const core = new CourseCatalogueCore(typesenseConfig, catalogueConfig);
+  const searchClient = core.getSearchClient();
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-	<React.StrictMode>
-    	<App locale="hr" searchClient={searchClient} config={catalogueConfig} />
-  	</React.StrictMode>
-);
+  const rootElement = document.getElementById('root');
+  if (rootElement) {
+    ReactDOM.createRoot(rootElement).render(
+      <React.StrictMode>
+        <App locale="hr" searchClient={searchClient} config={catalogueConfig} />
+      </React.StrictMode>
+    );
+  }
+} else {
+  // Display error message if credentials are missing
+  const rootElement = document.getElementById('root');
+  if (rootElement) {
+    rootElement.innerHTML = `
+      <div style="padding: 20px; color: red; text-align: center;">
+        <h1>Configuration Error</h1>
+        <p>Typesense API credentials are missing. Please check your configuration.</p>
+      </div>
+    `;
+  }
+}
