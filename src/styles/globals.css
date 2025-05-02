@@ -138,9 +138,14 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add shadow */
   border: 1px solid lightgray; /* Add border */
   background-color: white; /* Background color */
-  /* max-width: 480px; Maximum width */
-  width: 320px; /* Full width up to max-width */
-  max-width: 95vw;
+  width: 95vw;
+  max-width: 300px;
+}
+
+@media (min-width: 640px) {
+  .maplibregl-popup-content {
+    width: 300px;
+  }
 }
 
 .corazon-popup .maplibregl-popup-close-button {
