@@ -139,7 +139,8 @@
   border: 1px solid lightgray; /* Add border */
   background-color: white; /* Background color */
   /* max-width: 480px; Maximum width */
-  width: 350px; /* Full width up to max-width */
+  width: 320px; /* Full width up to max-width */
+  max-width: 95vw;
 }
 
 .corazon-popup .maplibregl-popup-close-button {
