@@ -110,7 +110,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             ref={cardRef}
             onClick={handleClick}
             className={`
-                ${isSelected ? 'bg-indigo-200 hover:bg-indigo-200 ring ring-indigo-800' : 'bg-white hover:bg-indigo-100'}
+                ${isSelected ? 'bg-gray-50 hover:bg-gray-50 ring ring-gray-200' : 'bg-white hover:bg-gray-50'}
                 ${layout === 'compact' ? 'p-2' : 'p-3'}
                 flex w-full overflow-hidden cursor-pointer group
             `}
@@ -127,7 +127,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                             <Highlight attribute="name" hit={course} />
                         </h3>
                         <button 
-                            className="toggle-details p-1 text-gray-500 hover:text-indigo-600"
+                            className="toggle-details p-1 text-gray-500"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setShowDetails(!showDetails);
@@ -141,8 +141,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                         </button>
                     </div>
                     <div className='space-y-1'>
-                        <div className='flex items-center space-x-1'>
-                            <CalendarDaysIcon className='w-4 h-4 text-gray-500 group-hover:text-indigo-600'/>
+                        <div className='flex items-center space-x-2'>
+                            <CalendarDaysIcon className='w-4 h-4 text-gray-500 group-hover:text-indigo-600 flex-shrink-0'/>
                             <ul className='flex items-center space-x-1'>
                                 {DAYS.map((day) => (
                                     <li 
@@ -161,9 +161,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
                         {showLevel && (
                             <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex justify-between items-center">
-                                <span className='flex items-center'>
-                                    <ChartBarSquareIcon className='w-4 h-4 mr-1'/>
-                                    {getLabel(course.level, CourseLevelLabels, t)}
+                                <span className='flex items-center space-x-2'>
+                                    <ChartBarSquareIcon className='w-4 h-4 flex-shrink-0'/>
+                                    <span>{getLabel(course.level, CourseLevelLabels, t)}</span>
                                 </span>
                             </p>
                         )}
@@ -174,7 +174,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                                 {showSchedule && schedule.length > 0 && (
                                     <div className="text-xs text-gray-500 group-hover:text-indigo-600">
                                         <div className="flex items-start space-x-2">
-                                            <ClockIcon className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                                            <ClockIcon className="w-4 h-4 flex-shrink-0" />
                                             <div className="space-y-1">
                                                 {schedule.map((timeSlot, index) => (
                                                     <div key={index} className="flex items-center space-x-2">
@@ -189,35 +189,35 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
 
                                 {showStyles && course.styles && (
-                                    <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-start">
-                                        <TagIcon className='w-4 h-4 mr-1 flex-shrink-0'/>
+                                    <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-start space-x-2">
+                                        <TagIcon className='w-4 h-4 flex-shrink-0'/>
                                         <Highlight attribute="styles" hit={course} />
                                     </p>
                                 )}
 
                                 {showPublic && (
-                                    <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-center">
-                                        <UsersIcon className='w-4 h-4 mr-1'/>
-                                        {getLabel(course.public, CoursePublicLabels, t)}
+                                    <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-center space-x-2">
+                                        <UsersIcon className='w-4 h-4 flex-shrink-0'/>
+                                        <span className='capitalize'>{getLabel(course.public, CoursePublicLabels, t)}</span>
                                     </p>
                                 )}
                                 
                                 {showFocus && (
-                                    <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex justify-between items-center">
-                                        <span className='flex items-center justify-end'>
-                                            <ViewfinderCircleIcon className='w-4 h-4 mr-1'/>
-                                            {getLabel('partnerwork', CourseFocusLabels, t)}
+                                    <p className="text-xs text-gray-500 flex group-hover:text-indigo-600 justify-between items-center">
+                                        <span className='flex items-center justify-end space-x-2'>
+                                            <ViewfinderCircleIcon className='w-4 h-4 flex-shrink-0'/>
+                                            <span>{getLabel('partnerwork', CourseFocusLabels, t)}</span>
                                         </span>
                                     </p>
                                 )}
 
-                                <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-center">
+                                <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-center space-x-2">
                                     <MapPinIcon className="w-4 h-4 flex-shrink-0"/>
                                     <span className='text-wrap break-words'>{course.address}</span>
                                 </p>
 
-                                <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-start">
-                                    <BuildingLibraryIcon className='w-4 h-4 mr-1'/>
+                                <p className="text-xs text-gray-500 group-hover:text-indigo-600 flex items-start space-x-2">
+                                    <BuildingLibraryIcon className='w-4 h-4 flex-shrink-0'/>
                                     <Highlight attribute="organization_name" hit={course} />
                                 </p>
 

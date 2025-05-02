@@ -131,7 +131,7 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
                     {showDetails && (
                         <div className='mt-1 space-y-1'>
                             <div className='flex items-center space-x-2'>
-                                <CalendarDaysIcon className='w-5 h-5 text-gray-500 group-hover:text-indigo-600 flex-shrink-0' />
+                                <CalendarDaysIcon className='w-4 h-4 text-gray-500 group-hover:text-indigo-600 flex-shrink-0' />
                                 <ul className='flex items-center space-x-1'>
                                     {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map((day) => (
                                         <li
@@ -152,7 +152,7 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
                             <p className='text-xs text-gray-500'>
                                 {showLevel && (
                                     <span className="flex items-center space-x-2">
-                                        <ChartBarSquareIcon className="w-5 h-5 flex-shrink-0" />
+                                        <ChartBarSquareIcon className="w-4 h-4 flex-shrink-0" />
                                         <span>{getLabel(course.level, CourseLevelLabels, t)}</span>
                                     </span>
                                 )}
@@ -161,7 +161,7 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
 
                             <div className="text-xs text-gray-500 group-hover:text-indigo-600">
                                 <div className="flex items-start space-x-2">
-                                    <ClockIcon className="w-5 h-5 flex-shrink-0" />
+                                    <ClockIcon className="w-4 h-4 flex-shrink-0" />
                                     <div className="space-y-1">
                                         {timetableData.map((timeSlot, index) => (
                                             <div key={index} className="flex items-center space-x-2">
@@ -177,7 +177,7 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
 
                             {showStyles && course.styles && course.styles.length > 0 && (
                                 <p className='flex items-center space-x-2 text-gray-500'>
-                                    <TagIcon className='w-5 h-5 flex-shrink-0' />
+                                    <TagIcon className='w-4 h-4 flex-shrink-0' />
                                     <p className="text-xs truncate">
                                         {course.styles.join(', ')}
                                     </p>
@@ -185,13 +185,13 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
                             )}
 
                             <p className="text-xs text-gray-500 flex items-center space-x-2">
-                                <UsersIcon className='w-5 h-5 flex-shrink-0' />
+                                <UsersIcon className='w-4 h-4 flex-shrink-0' />
                                 <span className='capitalize'>{getLabel(course.public, CoursePublicLabels, t)}</span>
                             </p>
 
                             {showFocus && (
                                 <p className='flex items-center text-gray-500 space-x-2'>
-                                    <ViewfinderCircleIcon className="w-5 h-5 flex-shrink-0" />
+                                    <ViewfinderCircleIcon className="w-4 h-4 flex-shrink-0" />
                                     <span className="capitalize">
                                         {getLabel(course.focus, CourseFocusLabels, t)}
                                     </span>
@@ -199,16 +199,17 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
                             )}
 
                             <p className="text-xs text-gray-500 flex items-center space-x-2">
-                                <BuildingLibraryIcon className='w-5 h-5 flex-shrink-0' />
+                                <BuildingLibraryIcon className='w-4 h-4 flex-shrink-0' />
                                 <span>{course.organization_name}</span>
                             </p>
 
                             {showAddress && (
                                 <p className="text-xs text-gray-500 flex items-center space-x-2">
-                                    <MapPinIcon className='w-5 h-5 flex-shrink-0' />
+                                    <MapPinIcon className='w-4 h-4 flex-shrink-0' />
                                     <span className="truncate">{course.address}</span>
                                 </p>
                             )}
+                            
                             <div className="pt-2">
                                 <button
                                     onClick={handleLinkClick}
@@ -220,8 +221,6 @@ export const CoursePopupItem: React.FC<CoursePopupItemProps> = ({
                             </div>
                         </div>
                     )}
-
-
                 </div>
             </div>
         </div>
