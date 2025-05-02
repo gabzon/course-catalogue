@@ -16,8 +16,8 @@ export const CoursePopup: React.FC<CoursePopupProps> = ({
 
     return (
         <div 
-            className="bg-white shadow-lg overflow-hidden w-full max-w-[95vw] sm:max-w-[350px] mt-2"
-            // style={{ maxWidth: '350px' }}
+            className="bg-white shadow-lg overflow-hidden mt-2"
+            style={{ maxWidth: '320px' }}
         >
             <div 
                 className="overflow-y-auto divide-y divide-gray-200"
