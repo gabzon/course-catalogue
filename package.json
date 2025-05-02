@@ -28,7 +28,7 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && npm run build:es-cjs && npm run build:webcomponent",
+		"build": "vite build",
 		"build:es-cjs": "vite build",
 		"build:webcomponent": "FORMAT=webcomponent vite build",
 		"preview": "vite preview",
